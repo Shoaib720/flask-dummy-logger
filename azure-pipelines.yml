@@ -1,3 +1,5 @@
+name: Flask Dummy Logger - YAML
+
 trigger:
   branches:
     include:

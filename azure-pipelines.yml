@@ -1,0 +1,49 @@
+name: Flask Dummy Logger - YAML
+
+trigger:
+  branches:
+    include:
+      - development  # Adjust to your branch
+
+pr:
+  branches:
+    include:
+      - development  # Target branch for PRs
+
+stages:
+  - stage: Build
+    displayName: "Build Stage"
+    jobs:
+      - job: BuildJob
+        displayName: "Build Job"
+        steps:
+          - script: |
+              echo "Starting Build Stage..."
+              echo "Build completed successfully!"
+            displayName: "Run Build Script"
+
+  - stage: Deploy
+    displayName: "Deploy Stage"
+    dependsOn: Build
+    condition: succeeded()  # Only run if Build stage succeeds
+    jobs:
+      - job: DeployJob
+        displayName: "Deploy Job"
+        steps:
+          - script: |
+              echo "Starting Deploy Stage..."
+              echo "Deploy completed successfully!"
+            displayName: "Run Deploy Script"
+
+  - stage: Test
+    displayName: "Test Stage"
+    dependsOn: Deploy
+    condition: succeeded()  # Only run if Deploy stage succeeds
+    jobs:
+      - job: TestJob
+        displayName: "Test Job"
+        steps:
+          - script: |
+              echo "Starting Test Stage..."
+              echo "Testing completed successfully!"
+            displayName: "Run Test Script"
